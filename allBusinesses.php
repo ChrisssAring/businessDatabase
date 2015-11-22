@@ -12,7 +12,7 @@ $city = $_POST['city'];
 $state = $_POST['state'];
 $postalCode = $_POST['postalCode'];
 $workType = $_POST['workType'];
-$volunteer = $_POST['volunteer']; "*";
+$volunteer = $_POST['volunteer'];
 $hoursNeeded = $_POST['hoursNeeded'];
 
 if (empty($_POST['city'])) {

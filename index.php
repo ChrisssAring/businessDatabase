@@ -6,9 +6,7 @@ and open the template in the editor.
 -->
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <link href="businessInformation.css" type="text/css" rel="stylesheet" media="all" />
-        <title></title>
+    <meta charset="utf-8" />
     </head>
     <body>
         <form action="loginBusiness.php">
