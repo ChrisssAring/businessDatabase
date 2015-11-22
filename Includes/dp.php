@@ -168,6 +168,7 @@ class BusinessDB extends mysqli {
 return $this->query("SELECT name, owner_name, address, city, state, postal_code,"
                 . " email, area_code, exchange_code, line_number, extension, website, goal,"
                 . " work_type, positions_open, volunteer, hours_needed, begin_month, end_month,"
-                . " other_information FROM businesses WHERE city ='".$city."' AND state ='".$state."'");
+                . " other_information FROM businesses WHERE city LIKE '".$city."' AND state LIKE '".$state."' AND postal_code LIKE '".$postal_code."' AND work_type LIKE '".$work_type."'"
+        . " AND volunteer LIKE '".$volunteer."' AND positions_open != 0");
     }
 }

@@ -8,9 +8,34 @@ and open the template in the editor.
 
 require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
 
-        $allBusinesses = BusinessDB::getInstance()->get_all_businesses($_POST['city'], $_POST['state'], $_POST['postalCode'], $_POST['workType'],
-                $_POST['volunteer'], $_POST['hoursNeeded']);
-        echo $_POST['city'];
+$city = $_POST['city'];
+$state = $_POST['state'];
+$postalCode = $_POST['postalCode'];
+$workType = $_POST['workType'];
+$volunteer = $_POST['volunteer']; "*";
+$hoursNeeded = $_POST['hoursNeeded'];
+
+if (empty($_POST['city'])) {
+    $city = '%';
+}
+if (empty($_POST['state'])) {
+    $state = '%';
+}
+if (empty($_POST['postalCode'])) {
+    $postalCode = '%';
+}
+if (empty($_POST['workType'])) {
+    $workType = '%';
+}
+if (empty($_POST['volunteer'])) {
+    $volunteer = '%';
+}
+if (empty($_POST['hoursNeeded'])) {
+    $hoursNeeded = '%';
+}
+
+        $allBusinesses = BusinessDB::getInstance()->get_all_businesses($city, $state, $postalCode, $workType,
+                $volunteer, $hoursNeeded);
         
 ?>
 
