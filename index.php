@@ -11,16 +11,11 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <div id="content">
         <form action="loginBusiness.php">
             Business Login: <input type="submit" value="Go" />
         </form>
         <form action="loginUser.php">
             User Login: <input type="submit" value="Go" />
         </form>
-            </div>
-        <div class="createWishList">
-        <br> <a href="userOrBusiness.php">Create an Account</a>
-        </div>
     </body>
 </html>
