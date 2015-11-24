@@ -14,8 +14,9 @@ and open the template in the editor.
         <div class="wrapper">
             
         <form action="loginBusiness.php" class="pure-form">
-            <button class="button-secondary "type="submit">Business Login</button>
-                      <button class="button-secondary "type="submit" formaction="loginUser.php">User Login</button><br>
+            <button class="button-secondary"type="submit">Business Login</button>
+            <button class="button-secondary"type="submit" formaction="loginUser.php">User Login</button><br><br><br><br>
+            <button class="button-secondary" type="submit" formaction="createNewUser.php">Create an account!</button>
         </form>
     </div>
     </body>

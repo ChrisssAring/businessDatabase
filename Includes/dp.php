@@ -58,7 +58,7 @@ class BusinessDB extends mysqli {
     public function get_businesses_by_business_id($businessID) {
         return $this->query("SELECT id, name, owner_name, address, city, state, postal_code,"
                 . " email, area_code, exchange_code, line_number, extension, website, goal,"
-                . " work_type, positions_open, volunteer, hours_needed, begin_month, end_month,"
+                . " work_type, positions_open, compensated_experience, hours_needed, begin_month, end_month,"
                 . " other_information FROM businesses WHERE id=" . $this->real_escape_string($businessID));
     }
 
@@ -91,7 +91,7 @@ class BusinessDB extends mysqli {
     }
 
     public function update_business($businessID, $owner, $address, $city, $state, $postal_code, $email, $phoneFull,
-        $extension, $website, $goal, $work_type, $positions_open, $volunteer, $hours_needed, $begin_month,
+        $extension, $website, $goal, $work_type, $positions_open, $compensated_experience, $hours_needed, $begin_month,
         $end_month, $other_information){
         if ($this->format_phone_for_sql($phoneFull)==null){
             $test = $this->query("UPDATE businesses SET owner_name = '" . $this->real_escape_string($owner) .
@@ -105,7 +105,7 @@ class BusinessDB extends mysqli {
                 "', goal = '" . $this->real_escape_string($goal) .
                 "', work_type = '" . $this->real_escape_string($work_type) .
                 "', positions_open = '" . $this->real_escape_string($positions_open) .
-                "', volunteer = '" . $this->real_escape_string($volunteer) .
+                "', compensated_experience = '" . $this->real_escape_string($compensated_experience) .
                 "', hours_needed = '" . $this->real_escape_string($hours_needed) .
                 "', begin_month = '" . $this->real_escape_string($begin_month) .
                 "', end_month = '" . $this->real_escape_string($end_month) .
@@ -133,7 +133,7 @@ class BusinessDB extends mysqli {
                 "', goal = '" . $this->real_escape_string($goal) .
                 "', work_type = '" . $this->real_escape_string($work_type) .
                 "', positions_open = '" . $this->real_escape_string($positions_open) .
-                "', volunteer = '" . $this->real_escape_string($volunteer) .
+                "', compensated_experience = '" . $this->real_escape_string($compensated_experience) .
                 "', hours_needed = '" . $this->real_escape_string($hours_needed) .
                 "', begin_month = '" . $this->real_escape_string($begin_month) .
                 "', end_month = '" . $this->real_escape_string($end_month) .
@@ -156,11 +156,11 @@ class BusinessDB extends mysqli {
         }
     }
     
-    function get_all_businesses($city, $state, $postal_code, $work_type, $volunteer, $hours_needed) {
+    function get_all_businesses($city, $state, $postal_code, $work_type, $compensated_experience, $hours_needed) {
 return $this->query("SELECT name, owner_name, address, city, state, postal_code,"
                 . " email, area_code, exchange_code, line_number, extension, website, goal,"
-                . " work_type, positions_open, volunteer, hours_needed, begin_month, end_month,"
+                . " work_type, positions_open, compensated_experience, hours_needed, begin_month, end_month,"
                 . " other_information FROM businesses WHERE city LIKE '".$city."' AND state LIKE '".$state."' AND postal_code LIKE '".$postal_code."' AND work_type LIKE '".$work_type."'"
-        . " AND volunteer LIKE '".$volunteer."' AND positions_open != 0");
+        . " AND compensated_experience LIKE '".$compensated_experience."' AND positions_open != 0");
     }
 }

@@ -14,7 +14,7 @@ if (!array_key_exists("user", $_SESSION)) {
 $stateIsNull = false;
 $cityIsNull = false;
 $workTypeIsNull = false;
-$volunteerIsNull = false;
+$compensatedExperienceIsNull = false;
 
 
 require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         BusinessDB::getInstance()->update_business($_POST['businessID'], $_POST['ownerName'],
         $_POST['address'], $_POST['city'], $_POST['state'], $_POST['postalCode'], $_POST['email'],
         $_POST['phoneFull'], $_POST['extension'], $_POST['website'], $_POST['goal'], $_POST['workType'],
-        $_POST['positionsOpen'], $_POST['volunteer'], $_POST['hoursNeeded'], $_POST['beginMonth'],
+        $_POST['positionsOpen'], $_POST['compensatedExperience'], $_POST['hoursNeeded'], $_POST['beginMonth'],
         $_POST['endMonth'], $_POST['otherInformation']);
        header('Location: editBusinessInformation.php' );
         exit;
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             "owner_name" => $_POST["ownerName"], "address" => $_POST["address"], "city" => $_POST["city"], "state" => $_POST["state"],
             "postal_code" => $_POST["postalCode"], "email" => $_POST["email"], "area_code" => $area_code, "exchange_code" => $exchange_code,
             "line_number" => $line_number , "extension" => $_POST["extension"], "website" => $_POST["website"], "goal" => $_POST["goal"],
-            "work_type" => $_POST["workType"], "positions_open" => $_POST["positionsOpen"], "volunteer" => $_POST["volunteer"], 
+            "work_type" => $_POST["workType"], "positions_open" => $_POST["positionsOpen"], "compensated_experience" => $_POST["compensatedExperience"], 
             "hours_needed" => $_POST["hoursNeeded"], "begin_month" => $_POST['beginMonth'], "end_month" => $_POST['endMonth'],
             "other_information" => $_POST["otherInformation"]);
         } else if (array_key_exists("businessID", $_GET)) {
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             $business = array("owner_name" => "", "address" => "", "city" => "", "state" => "", "postal_code" => "", 
             "email" => "", "phoneFull" => "", "extension" => "", "website" => "", 
-            "goal" => "", "work_type" => "", "positionsOpen" => "", "volunteer" => "", 
+            "goal" => "", "work_type" => "", "positions_open" => "", "compensated_experience" => "", 
             "hours_needed" => "", "begin_month" => "", "end_month" => "", "other_information" => "");
         }
         ?>  
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             Goal: <input type="text" name="goal" value="<?php echo $business['goal'];?>"/><br/>
             Work Type:<input type="text" name="workType" value="<?php echo $business['work_type'];?>"/><br/>
             Number of Available Positions: <input type="text" name="positionsOpen" value="<?php echo $business['positions_open'];?>"/><br/>
-            Is Volunteer?: <input type="text" name="volunteer" value="<?php echo $business['volunteer'];?>"/><br/>
+            compensated Experience: <input type="text" name="compensatedExperience" value="<?php echo $business['compensated_experience'];?>"/><br/>
             Hours Needed: <input type="text" name="hoursNeeded" value="<?php echo $business['hours_needed'];?>"/><br/>
             <select name="beginMonth">
                 <option value="January" <?php if($business['begin_month'] == 'January'){echo("selected");}?>>January</option>

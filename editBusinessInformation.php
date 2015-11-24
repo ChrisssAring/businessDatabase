@@ -29,7 +29,7 @@ and open the template in the editor.
         <th>Goal</th>
         <th>Work Type</th>
         <th>Available Positions</th>
-        <th>Is Volunteer Work?</th>
+        <th>Compensated Experience</th>
         <th>Hours Needed</th>
         <th>Beginning Month</th>
         <th>Ending Month</th>
@@ -49,7 +49,7 @@ and open the template in the editor.
         echo "<td>" . htmlentities($row["goal"]) . "</td>";
         echo "<td>" . htmlentities($row["work_type"]) . "</td>";
         echo "<td>" . htmlentities($row["positions_open"]) . "</td>";
-        echo "<td>" . htmlentities($row["volunteer"]) . "</td>";
+        echo "<td>" . htmlentities($row["compensated_experience"]) . "</td>";
         echo "<td>" . htmlentities($row["hours_needed"]) . "</td>";
         echo "<td>" . htmlentities($row["begin_month"]) . "</td>";
         echo "<td>" . htmlentities($row["end_month"]) . "</td>";

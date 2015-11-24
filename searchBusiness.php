@@ -14,7 +14,7 @@ if (!array_key_exists("user", $_SESSION)) {
 $stateIsNull = false;
 $cityIsNull = false;
 $workTypeIsNull = false;
-$volunteerIsNull = false;
+$compensatedExperienceIsNull = false;
 
 
 require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
@@ -35,7 +35,7 @@ require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
             State: <input type="text" name="state" value=""/><br/>
             ZIP Code: <input type="text" name="postalCode" value=""/><br/>
             Work Type:<input type="text" name="workType" value=""/><br/>
-            Is Volunteer?: <input type="text" name="volunteer" value=""/><br/>
+            Compensated Experience: <input type="text" name="compensatedExperience" value=""/><br/>
             Hours Needed: <input type="text" name="hoursNeeded" value=""/><br/>
             <select name="beginMonth">
                 <option value="January">January</option>

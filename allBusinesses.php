@@ -12,7 +12,7 @@ $city = $_POST['city'];
 $state = $_POST['state'];
 $postalCode = $_POST['postalCode'];
 $workType = $_POST['workType'];
-$volunteer = $_POST['volunteer'];
+$compensatedExperience = $_POST['compensatedExperience'];
 $hoursNeeded = $_POST['hoursNeeded'];
 
 if (empty($_POST['city'])) {
@@ -27,15 +27,15 @@ if (empty($_POST['postalCode'])) {
 if (empty($_POST['workType'])) {
     $workType = '%';
 }
-if (empty($_POST['volunteer'])) {
-    $volunteer = '%';
+if (empty($_POST['compensatedExperience'])) {
+    $compensatedExperience = '%';
 }
 if (empty($_POST['hoursNeeded'])) {
     $hoursNeeded = '%';
 }
 
         $allBusinesses = BusinessDB::getInstance()->get_all_businesses($city, $state, $postalCode, $workType,
-                $volunteer, $hoursNeeded);
+                $compensatedExperience, $hoursNeeded);
         
 ?>
 
@@ -56,7 +56,7 @@ if (empty($_POST['hoursNeeded'])) {
         <th>Goal</th>
         <th>Work Type</th>
         <th>Available Positions</th>
-        <th>Is Volunteer Work?</th>
+        <th>Compensated Experience</th>
         <th>Hours Needed</th>
         <th>Beginning Month</th>
         <th>Ending Month</th>
@@ -74,7 +74,7 @@ if (empty($_POST['hoursNeeded'])) {
         echo "<td>" . htmlentities($row["goal"]) . "</td>";
         echo "<td>" . htmlentities($row["work_type"]) . "</td>";
         echo "<td>" . htmlentities($row["positions_open"]) . "</td>";
-        echo "<td>" . htmlentities($row["volunteer"]) . "</td>";
+        echo "<td>" . htmlentities($row["compensated_experience"]) . "</td>";
         echo "<td>" . htmlentities($row["hours_needed"]) . "</td>";
         echo "<td>" . htmlentities($row["begin_month"]) . "</td>";
         echo "<td>" . htmlentities($row["end_month"]) . "</td>";
