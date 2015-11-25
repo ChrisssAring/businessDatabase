@@ -11,10 +11,16 @@ if (!array_key_exists("user", $_SESSION)) {
     exit;
 }
 
+$ownerIsNull = false;
+$addressIsNull = false;
 $stateIsNull = false;
 $cityIsNull = false;
+$postalCodeIsNull = false;
 $workTypeIsNull = false;
+$positionsOpenIsNull = false;
 $compensatedExperienceIsNull = false;
+$hoursNeededIsNull = false;
+$anyAreNull = false;
 
 
 require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
@@ -23,7 +29,34 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (array_key_exists("back", $_POST)) {
         header('Location: editBusinessInformation.php' ); 
         exit;
-    } else {
+    } else if ($_POST['ownerName'] == "") {
+        $ownerIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['address'] == "") {
+        $addressIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['state'] == "") {
+        $stateIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['city'] == "") {
+        $cityIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['postalCode'] == "") {
+        $postalCodeIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['workType'] == "") {
+        $workTypeIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['positionsOpen'] == "") {
+        $positionsOpenIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['hoursNeeded'] == "") {
+        $hoursNeededIsNull = true;
+        $anyAreNull = true;
+    } if ($_POST['compensatedExperience'] == "") {
+        $compensatedExperienceIsNull = true;
+        $anyAreNull = true;
+    } if (!$anyAreNull) {
         BusinessDB::getInstance()->update_business($_POST['businessID'], $_POST['ownerName'],
         $_POST['address'], $_POST['city'], $_POST['state'], $_POST['postalCode'], $_POST['email'],
         $_POST['phoneFull'], $_POST['extension'], $_POST['website'], $_POST['goal'], $_POST['workType'],
@@ -37,16 +70,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css?<?php echo time(); ?>" />
         <title></title>
     </head>
     <body>   
-        <?php 
+        <?php
         if  ($_SERVER["REQUEST_METHOD"] == "POST") {
             $phoneFull = BusinessDB::getInstance()->format_phone_for_sql($_POST["phoneFull"]);
             $area_code = $phoneFull[0];
-            $extension_code = $phoneFull[1];
+            $exchange_code = $phoneFull[1];
             $line_number = $phoneFull[2];
-            $business = array("id" => $_POST["businessID"], "name" => $_POST["name"], 
+            $business = array("id" => $_POST["businessID"],
             "owner_name" => $_POST["ownerName"], "address" => $_POST["address"], "city" => $_POST["city"], "state" => $_POST["state"],
             "postal_code" => $_POST["postalCode"], "email" => $_POST["email"], "area_code" => $area_code, "exchange_code" => $exchange_code,
             "line_number" => $line_number , "extension" => $_POST["extension"], "website" => $_POST["website"], "goal" => $_POST["goal"],
@@ -65,19 +99,82 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <form name="editBusiness" action="editBusiness.php" method="POST">
             <input type="hidden" name="businessID" value="<?php echo $business["id"];?>" />
             Name of Owner: <input type="text" name="ownerName" value="<?php echo $business['owner_name'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($ownerIsNull) {
+                echo "Please enter name of owner.<br/>";
+            }
+            ?>
+            </p>
             Street Address: <input type="text" name="address" value="<?php echo $business['address'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($addressIsNull) {
+                echo "Please enter an address.<br/>";
+            }
+            ?>
+            </p>
             City: <input type="text" name="city" value="<?php echo $business['city'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($cityIsNull) {
+                echo "Please enter a city.<br/>";
+            }
+            ?>
+            </p>
             State: <input type="text" name="state" value="<?php echo $business['state'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($stateIsNull) {
+                echo "Please enter a state.<br/>";
+            }
+            ?>
+            </p>
             ZIP Code: <input type="text" name="postalCode" value="<?php echo $business['postal_code'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($postalCodeIsNull) {
+                echo "Please enter a ZIP Code.<br/>";
+            }
+            ?>
+            </p>
             Email: <input type="text" name="email" value="<?php echo $business['email'];?>"/><br/>
             Phone Number: <input type="text" name="phoneFull" value="<?php echo $business['area_code'].$business['exchange_code'].$business['line_number'] ;?>"/><br/>
             Extension Number: <input type="text" name="extension" value="<?php echo $business['extension'];?>"/><br/>
             Website: <input type="text" name="website" value="<?php echo $business['website'];?>"/><br/>
             Goal: <input type="text" name="goal" value="<?php echo $business['goal'];?>"/><br/>
             Work Type:<input type="text" name="workType" value="<?php echo $business['work_type'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($workTypeIsNull) {
+                echo "Please enter the type of work.<br/>";
+            }
+            ?>
+            </p>
             Number of Available Positions: <input type="text" name="positionsOpen" value="<?php echo $business['positions_open'];?>"/><br/>
-            compensated Experience: <input type="text" name="compensatedExperience" value="<?php echo $business['compensated_experience'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($positionsOpenIsNull) {
+                echo "Please enter the number of available positions.<br/>";
+            }
+            ?>
+            </p>
+            Compensated Experience: <input type="text" name="compensatedExperience" value="<?php echo $business['compensated_experience'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($compensatedExperienceIsNull) {
+                echo "Please enter 'Y' or 'N'.<br/>";
+            }
+            ?>
+            </p>
             Hours Needed: <input type="text" name="hoursNeeded" value="<?php echo $business['hours_needed'];?>"/><br/>
+            <p class="error">
+            <?php
+            if ($hoursNeededIsNull) {
+                echo "Please enter the number of hours needed.<br/>";
+            }
+            ?>
+            </p>
             <select name="beginMonth">
                 <option value="January" <?php if($business['begin_month'] == 'January'){echo("selected");}?>>January</option>
                 <option value="February" <?php if($business['begin_month'] == 'February'){echo("selected");}?>>February</option>

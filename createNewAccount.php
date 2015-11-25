@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<?php
+require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
+
+/** other variables */
+$businessNameIsUnique = true;
+$userNameIsUnique = true;
+$passwordIsValid = true;				
+$userIsEmpty = false;					
+$passwordIsEmpty = false;				
+$password2IsEmpty = false;
+
+/** Check that the page was requested from itself via the POST method. */
+if ($_SERVER["REQUEST_METHOD"] == "POST") {  
+    if ($_POST["user"]=="") {
+        $userIsEmpty = true;
+    }
+
+    session_start();
+    $_SESSION['user'] = $_POST['user'];
+    
+    $userID = BusinessDB::getInstance()->get_user_id_by_name($_POST["user"]);
+    $userIDnum=mysqli_num_rows($userID);
+    if ($userIDnum) {
+        $userNameIsUnique = false;
+    }
+    
+    $businessID = BusinessDB::getInstance()->verify_business_id_by_name($_POST["user"]);
+    $businessIDnum=mysqli_num_rows($businessID);
+    if ($businessIDnum) {
+        $businessNameIsUnique = false;
+    }
+    
+    if ($_POST["password"]=="") {
+        $passwordIsEmpty = true;
+    }
+    if ($_POST["password2"]=="") {
+        $password2IsEmpty = true;
+    }
+    if ($_POST["password"]!=$_POST["password2"]) {
+        $passwordIsValid = false;
+    }
+    
+    /** Check whether the boolean values show that the input data was validated successfully.
+     * If the data was validated successfully, add it as a new entry in the "wishers" database.
+     * After adding the new entry, close the connection and redirect the application to editWishList.php.
+     */
+    
+    if (!$userIsEmpty && $userNameIsUnique && $businessNameIsUnique && !$passwordIsEmpty && !$password2IsEmpty && $passwordIsValid) {
+        if (isset($_POST['isBusiness'])) {
+        BusinessDB::getInstance()->create_business($_POST["user"], $_POST["password"]);
+        header('Location: editBusinessInformation.php' );
+        exit;
+        } else if (!isset($_POST['isBusiness']))
+        BusinessDB::getInstance()->create_user($_POST["user"], $_POST["password"]);
+        header('Location: searchBusiness.php' );
+        exit;
+    }
+}
+
+?>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css?<?php echo time(); ?>" /> 
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <span href="#" class="button" id="toggle-login">Register</span>
+        <div id="login">
+        <div id="triangle"></div>
+        <h1>Register</h1>
+        <form action="createNewAccount.php" method="POST">
+            <input type="text" placeholder="Username" name="user" />
+            <input type="password" placeholder="Password" name="password" />
+            <input type="password" placeholder="Confirm Password" name="password2" />
+            <input type="submit" value="Register" /> <br><br>
+            Are you registering as a business? <input type="checkbox" name="isBusiness"/>
+        </form>
+        </div>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> 
+     </body>
+</html>
