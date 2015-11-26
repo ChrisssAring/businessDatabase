@@ -76,9 +76,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="triangle"></div>
         <h1>Register</h1>
         <form action="createNewAccount.php" method="POST">
-            <input type="text" placeholder="Username" name="user" />
-            <input type="password" placeholder="Password" name="password" />
-            <input type="password" placeholder="Confirm Password" name="password2" />
+            <input type="text" placeholder="Username" name="user" /><br>
+            <p class="error">
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                if (!$businessNameIsUnique) {
+                    echo "That account name is taken.";
+                }
+            }
+             if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                if ($userIsEmpty) {
+                    echo "Please enter a usename.";
+                }
+            }
+            ?>
+            </p>
+            <input type="password" placeholder="Password" name="password" /><br>
+            <p class="error">
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                if ($passwordIsEmpty) {
+                    echo "Please enter a password.";
+                }
+            }
+            ?>
+            </p>
+            <input type="password" placeholder="Confirm Password" name="password2" /><br>
+            <p class="error">
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                if ($password2IsEmpty) {
+                    echo "Please confirm your password.";
+                }
+            }
+            ?>
+            </p>
             <input type="submit" value="Register" /> <br><br>
             Are you registering as a business? <input type="checkbox" name="isBusiness"/>
         </form>

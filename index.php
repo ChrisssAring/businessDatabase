@@ -35,8 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta charset="utf-8" />
     </head>
     <body>
+        <div id='navBar'>
+        <ul>
+        <li class='active'><a href='#'><span>1</span></a></li>
+        <li><a href='/BusinessInformation/createNewAccount.php'><span>2</span></a></li>
+        <li><a href='#'><span>3</span></a></li>
+        <li class='last'><a href='#'><span>4</span></a></li>
+        </ul>
+        </div>
+        <div class="wrapper">
         <h2>Assist-Base</h2>
-        
+        </div>
         <span href="#" class="button" id="toggle-login">Log in</span>
         <div id="login">
         <div id="triangle"></div>
@@ -59,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </form>
         </div>
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+           <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="script.js"></script>
         <script src="js/index.js"></script>        
     </body>
 </html>

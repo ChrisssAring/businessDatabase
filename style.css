@@ -11,6 +11,125 @@ and open the template in the editor.
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
+#navBar {
+  background: #f96e5b;
+  width: auto;
+}
+#navBar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  display: block;
+  zoom: 1;
+}
+#navBar ul:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#navBar ul li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+#navBar.align-right ul li {
+  float: right;
+}
+#navBar.align-center ul {
+  text-align: center;
+}
+#navBar ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding: 15px 25px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  position: relative;
+  -webkit-transition: color .25s;
+  -moz-transition: color .25s;
+  -ms-transition: color .25s;
+  -o-transition: color .25s;
+  transition: color .25s;
+}
+#navBar ul li a:hover {
+  color: #333333;
+}
+#navBar ul li a:hover:before {
+  width: 100%;
+}
+#navBar ul li a:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: -3px;
+  top: 19px;
+  height: 6px;
+  width: 6px;
+  background: #ffffff;
+  opacity: .5;
+}
+#navBar ul li a:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background: #333333;
+  -webkit-transition: width .25s;
+  -moz-transition: width .25s;
+  -ms-transition: width .25s;
+  -o-transition: width .25s;
+  transition: width .25s;
+}
+#navBar ul li.last > a:after,
+#navBar ul li:last-child > a:after {
+  display: none;
+}
+#navBar ul li.active a {
+  color: #333333;
+}
+#navBar ul li.active a:before {
+  width: 100%;
+}
+#navBar.align-right li.last > a:after,
+#navBar.align-right li:last-child > a:after {
+  display: block;
+}
+#navBar.align-right li:first-child a:after {
+  display: none;
+}
+@media screen and (max-width: 768px){
+  #navBar ul li {
+    float: none;
+    display: block;
+  }
+  #navBar ul li a {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #fb998c;
+  }
+  #navBar ul li.last > a,
+  #navBar ul li:last-child > a {
+    border: 0;
+  }
+  #navBar ul li a:after {
+    display: none;
+  }
+  #navBar ul li a:before {
+    display: none;
+  }
+}
 *{margin:0;padding:0;}
 
 body{
@@ -20,7 +139,7 @@ body{
 
 .button{
   width:100px;
-  background:#3399cc;
+  background:#f96e5b;
   display:block;
   margin:0 auto;
   margin-top:1%;
@@ -34,7 +153,7 @@ body{
 }
 
 .button:hover{
-  background:#2288bb;
+  background:#c5594a;
 }
 
 #login{
@@ -50,13 +169,13 @@ body{
   width:0;
   border-top:12x solid transparent;
   border-right:12px solid transparent;
-  border-bottom:12px solid #3399cc;
+  border-bottom:12px solid #f96e5b;
   border-left:12px solid transparent;
   margin:0 auto;
 }
 
 #login h1{
-  background:#3399cc;
+  background:#f96e5b;
   padding:20px 0;
   font-size:140%;
   font-weight:300;
@@ -88,7 +207,7 @@ input[type="text"],input[type="password"]{
 
 input[type="submit"]{
   width:100%;
-  background:#3399cc;
+  background:#f96e5b;
   border:0;
   padding:4%;
   font-family:'Open Sans',sans-serif;
@@ -100,7 +219,7 @@ input[type="submit"]{
 }
 
 input[type="submit"]:hover{
-  background:#2288bb;
+  background:#c5594a;
 }
 
 h2 {
@@ -143,5 +262,3 @@ p.error {
     font-size:100%;
     font-size: 0.75em;
 }
-
-
