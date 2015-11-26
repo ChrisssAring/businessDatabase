@@ -54,6 +54,28 @@ class BusinessDB extends mysqli {
             return null;
         }
     }
+    
+        public function get_user_name_from_email($name) {
+        $user = $this->query("SELECT name FROM users WHERE accountEmail = '"
+                . $this->real_escape_string($name) . "' OR name = '" . $this->real_escape_string($name) . "'");
+        if ($user->num_rows > 0){
+            $row = $user->fetch_row();
+            return $row[0];
+        } else {
+            return null;
+        }
+    }
+    
+        public function get_business_name_from_email($name) {
+        $user = $this->query("SELECT name FROM businesses WHERE accountEmail = '"
+                . $this->real_escape_string($name) . "' OR name = '" . $this->real_escape_string($name) . "'");
+        if ($user->num_rows > 0){
+            $row = $user->fetch_row();
+            return $row[0];
+        } else {
+            return null;
+        }
+    }
 
     public function get_businesses_by_business_id($businessID) {
         return $this->query("SELECT id, name, owner_name, address, city, state, postal_code,"
@@ -65,20 +87,28 @@ class BusinessDB extends mysqli {
     public function get_user_id_by_name($user) {
         return $this->query("SELECT id FROM users WHERE name='".$this->real_escape_string($user)."'");   
     }
+    
+    public function get_user_accountEmail_id_by_name($user) {
+        return $this->query("SELECT id FROM users WHERE accountEmail='".$this->real_escape_string($user)."'");   
+    }
 
+    public function get_business_accountEmail_id_by_name($user) {
+        return $this->query("SELECT id FROM businesses WHERE accountEmail='".$this->real_escape_string($user)."'");   
+    }
+    
     public function create_user ($name, $password){
         $this->query("INSERT INTO users (name, password) VALUES ('" . $this->real_escape_string($name) . "', '" . $this->real_escape_string($password) . "')");
     }
 
     public function verify_user_credentials ($name, $password){
         $result = $this->query("SELECT 1 FROM users
-                WHERE name = '" . $this->real_escape_string($name) . "' AND password = '" . $this->real_escape_string($password) . "'");
+                WHERE (name = '" . $this->real_escape_string($name) . "' OR accountEmail = '" . $this->real_escape_string($name) . "') AND password = '" . $this->real_escape_string($password) . "'");
         return $result->data_seek(0);
     }
 
     public function verify_business_credentials ($business, $password){
         $result = $this->query("SELECT 1 FROM businesses
-                WHERE name = '" . $this->real_escape_string($business) . "' AND password = '" . $this->real_escape_string($password) . "'");
+                WHERE (name = '" . $this->real_escape_string($business) . "' OR accountEmail = '" . $this->real_escape_string($business) ."') AND password = '" . $this->real_escape_string($password) . "'");
     return $result->data_seek(0);
     }
 
@@ -86,7 +116,7 @@ class BusinessDB extends mysqli {
         $this->query("INSERT INTO businesses (name, password) VALUES ('" . $this->real_escape_string($business) . "', '" . $this->real_escape_string($password) . "')");
     }
     
-    public function verify_business_id_by_name($business) {
+    public function get_business_id_by_name_only($business) {
         return $this->query("SELECT id FROM businesses WHERE name='".$this->real_escape_string($business)."'");   
     }
 

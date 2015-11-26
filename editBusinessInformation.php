@@ -36,7 +36,7 @@ and open the template in the editor.
         <th>Other Information</th></tr>
     <?php
     
-    require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
+    require_once("C:\\xampp\\htdocs\\BusinessDatabase\\Includes\\dp.php");
     $businessID = BusinessDB::getInstance()->get_business_id_by_name($_SESSION["user"]);
     $result = BusinessDB::getInstance()->get_businesses_by_business_id($businessID);
     while ($row = mysqli_fetch_array($result)) :

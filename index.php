@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
+require_once("C:\\xampp\\htdocs\\BusinessDatabase\\Includes\\dp.php");
 $logonUserSuccess = false;
 $logonBusinessSuccess = false;
 
@@ -17,12 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     echo $logonBusinessSuccess;
     if ($logonUserSuccess == true) {
         session_start();
-        $_SESSION['user'] = $_POST['user'];
+        $_SESSION['user'] = (BusinessDB::getInstance()->get_user_name_from_email($_POST['user']));
         header('Location: searchBusiness.php');
         exit;
     } else if ($logonBusinessSuccess == true) {
         session_start();
-        $_SESSION['user'] = $_POST['user'];
+        $_SESSION['user'] = (BusinessDB::getInstance()->get_business_name_from_email($_POST['user']));
         header('Location: editBusinessInformation.php');
         exit;
     }
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div id='navBar'>
         <ul>
         <li class='active'><a href='#'><span>1</span></a></li>
-        <li><a href='/BusinessInformation/createNewAccount.php'><span>2</span></a></li>
+        <li><a href='/BusinessDatabase/createNewAccount.php'><span>2</span></a></li>
         <li><a href='#'><span>3</span></a></li>
         <li class='last'><a href='#'><span>4</span></a></li>
         </ul>

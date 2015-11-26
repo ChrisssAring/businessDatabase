@@ -5,13 +5,16 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
+require_once("C:\\xampp\\htdocs\\BusinessDatabase\\Includes\\dp.php");
 
 /** other variables */
 $businessNameIsUnique = true;
 $userNameIsUnique = true;
+$UserAccountEmailIsUnique = true;
+$BusinessAccountEmailIsUnique = true;
 $passwordIsValid = true;				
-$userIsEmpty = false;					
+$userIsEmpty = false;
+$accountEmailIsEmpty = false;
 $passwordIsEmpty = false;				
 $password2IsEmpty = false;
 
@@ -21,6 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userIsEmpty = true;
     }
 
+    if ($_POST["accountEmail"]=="") {
+        $accountEmailIsEmpty = true;
+    }
+    
     session_start();
     $_SESSION['user'] = $_POST['user'];
     
@@ -30,7 +37,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userNameIsUnique = false;
     }
     
-    $businessID = BusinessDB::getInstance()->verify_business_id_by_name($_POST["user"]);
+    $UserAccountEmailID = BusinessDB::getInstance()->get_user_accountEmail_id_by_name($_POST["accountEmail"]);
+    $UserAccountEmailIDnum=mysqli_num_rows($UserAccountEmailID);
+    if ($UserAccountEmailIDnum) {
+        $UserAccountEmailIsUnique = false;
+    }
+    
+    $BusinessAccountEmailID = BusinessDB::getInstance()->get_business_accountEmail_id_by_name($_POST["accountEmail"]);
+    $BusinessAccountEmailIDnum=mysqli_num_rows($BusinessAccountEmailID);
+    if ($BusinessAccountEmailIDnum) {
+        $BusinessAccountEmailIsUnique = false;
+    }
+    
+    $businessID = BusinessDB::getInstance()->get_business_id_by_name_only($_POST["user"]);
     $businessIDnum=mysqli_num_rows($businessID);
     if ($businessIDnum) {
         $businessNameIsUnique = false;
@@ -51,13 +70,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      * After adding the new entry, close the connection and redirect the application to editWishList.php.
      */
     
-    if (!$userIsEmpty && $userNameIsUnique && $businessNameIsUnique && !$passwordIsEmpty && !$password2IsEmpty && $passwordIsValid) {
+    if (!$userIsEmpty && $userNameIsUnique && $businessNameIsUnique && $BusinessAccountEmailIsUnique && $UserAccountEmailIsUnique && !$passwordIsEmpty && !$password2IsEmpty && $passwordIsValid) {
         if (isset($_POST['isBusiness'])) {
-        BusinessDB::getInstance()->create_business($_POST["user"], $_POST["password"]);
+        BusinessDB::getInstance()->create_business($_POST["user"], $_POST["accountEmail"], $_POST["password"]);
         header('Location: editBusinessInformation.php' );
         exit;
         } else if (!isset($_POST['isBusiness']))
-        BusinessDB::getInstance()->create_user($_POST["user"], $_POST["password"]);
+        BusinessDB::getInstance()->create_user($_POST["user"], $_POST["accountEmail"], $_POST["password"]);
         header('Location: searchBusiness.php' );
         exit;
     }
@@ -80,13 +99,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p class="error">
             <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-                if (!$businessNameIsUnique) {
+                if (!$businessNameIsUnique || !$userNameIsUnique) {
                     echo "That account name is taken.";
                 }
             }
              if ($_SERVER["REQUEST_METHOD"] == "POST") { 
                 if ($userIsEmpty) {
                     echo "Please enter a usename.";
+                }
+            }
+            ?>
+            </p>
+            <input type="text" placeholder="Email" name="accountEmail" /><br>
+            <p class="error">
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                if (!$UserAccountEmailIsUnique || !$BusinessAccountEmailIsUnique) {
+                    echo "That email account is already in use.";
+                }
+            }
+             if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+                if ($accountEmailIsEmpty) {
+                    echo "Please enter an email.";
                 }
             }
             ?>

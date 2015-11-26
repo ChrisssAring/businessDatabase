@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <?php
 
-require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
+require_once("C:\\xampp\\htdocs\\BusinessDatabase\\Includes\\dp.php");
 
 $city = $_POST['city'];
 $state = $_POST['state'];

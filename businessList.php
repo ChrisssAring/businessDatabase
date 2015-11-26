@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         Business of: <?php echo htmlentities($_GET["business"])."<br/>";?>
         <?php
-        require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
+        require_once("C:\\xampp\\htdocs\\BusinessDatabase\\Includes\\dp.php");
         $businessID = BusinessDB::getInstance()-> get_business_id_by_name ($_GET["business"]);
         if (!$businessID) {
             exit("The business " .$_GET["business"]. " can not be found. Please check the spelling and try again" );

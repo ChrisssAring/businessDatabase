@@ -23,7 +23,7 @@ $hoursNeededIsNull = false;
 $anyAreNull = false;
 
 
-require_once("C:\\xampp\\htdocs\\BusinessInformation\\Includes\\dp.php");
+require_once("C:\\xampp\\htdocs\\BusinessDatabase\\Includes\\dp.php");
 $businessID = BusinessDB::getInstance()->get_business_id_by_name($_SESSION['user']);
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (array_key_exists("back", $_POST)) {
