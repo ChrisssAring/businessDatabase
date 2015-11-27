@@ -11,10 +11,10 @@ $logonBusinessSuccess = false;
 
 //verify user's credentials
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $logonUserSuccess = (BusinessDB::getInstance()->verify_user_credentials($_POST['user'], $_POST['userpassword']));
+    $logonUserSuccess = (BusinessDB::getInstance()->verify_user_credentials($_POST['user'], md5($_POST['userpassword'])));
     echo $logonUserSuccess;
-    $logonBusinessSuccess = (BusinessDB::getInstance()->verify_business_credentials($_POST['user'], $_POST['userpassword']));
-    echo $logonBusinessSuccess;
+    $logonBusinessSuccess = (BusinessDB::getInstance()->verify_business_credentials($_POST['user'], md5($_POST['userpassword'])));
+    
     if ($logonUserSuccess == true) {
         session_start();
         $_SESSION['user'] = (BusinessDB::getInstance()->get_user_name_from_email($_POST['user']));

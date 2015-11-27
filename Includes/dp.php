@@ -77,7 +77,15 @@ class BusinessDB extends mysqli {
         }
     }
 
-    public function get_businesses_by_business_id($businessID) {
+    public function update_user_account($email, $hash) {
+        $this->query("UPDATE users SET active='1' WHERE accountEmail='".$email."' AND hash='".$hash."' AND active='0'");
+    }
+    
+        public function update_business_account($email, $hash) {
+        $this->query("UPDATE businesses SET active='1' WHERE accountEmail='".$email."' AND hash='".$hash."' AND active='0'");
+    }
+
+        public function get_businesses_by_business_id($businessID) {
         return $this->query("SELECT id, name, owner_name, address, city, state, postal_code,"
                 . " email, area_code, exchange_code, line_number, extension, website, goal,"
                 . " work_type, positions_open, compensated_experience, hours_needed, begin_month, end_month,"
@@ -96,30 +104,40 @@ class BusinessDB extends mysqli {
         return $this->query("SELECT id FROM businesses WHERE accountEmail='".$this->real_escape_string($user)."'");   
     }
     
-    public function create_user ($name, $password){
-        $this->query("INSERT INTO users (name, password) VALUES ('" . $this->real_escape_string($name) . "', '" . $this->real_escape_string($password) . "')");
+    public function create_user ($name, $email, $password, $hash){
+        $this->query("INSERT INTO users (name, accountEmail, password, hash) VALUES ('" . $this->real_escape_string($name) . "', '" . $this->real_escape_string($email) . "', '" . $this->real_escape_string(md5($password)) . "', '" . $this->real_escape_string($hash) . "')");
     }
 
     public function verify_user_credentials ($name, $password){
         $result = $this->query("SELECT 1 FROM users
-                WHERE (name = '" . $this->real_escape_string($name) . "' OR accountEmail = '" . $this->real_escape_string($name) . "') AND password = '" . $this->real_escape_string($password) . "'");
+                WHERE (name = '" . $this->real_escape_string($name) . "' OR accountEmail = '" . $this->real_escape_string($name) . "') AND password = '" . $this->real_escape_string($password) . "' AND active ='1'");
         return $result->data_seek(0);
     }
 
     public function verify_business_credentials ($business, $password){
         $result = $this->query("SELECT 1 FROM businesses
-                WHERE (name = '" . $this->real_escape_string($business) . "' OR accountEmail = '" . $this->real_escape_string($business) ."') AND password = '" . $this->real_escape_string($password) . "'");
+                WHERE (name = '" . $this->real_escape_string($business) . "' OR accountEmail = '" . $this->real_escape_string($business) . "') AND password = '" . $this->real_escape_string($password) . "' AND active='1'");
     return $result->data_seek(0);
     }
 
-    public function create_business ($business, $password){
-        $this->query("INSERT INTO businesses (name, password) VALUES ('" . $this->real_escape_string($business) . "', '" . $this->real_escape_string($password) . "')");
+    public function create_business ($business, $email, $password, $hash){
+        $this->query("INSERT INTO businesses (name, accountEmail, password, hash) VALUES ('" . $this->real_escape_string($business) . "', '" . $this->real_escape_string($email) . "', '" . $this->real_escape_string(md5($password)) . "', '" . $this->real_escape_string($hash) . "')");
     }
     
     public function get_business_id_by_name_only($business) {
         return $this->query("SELECT id FROM businesses WHERE name='".$this->real_escape_string($business)."'");   
     }
 
+    public function check_user_hash($email, $hash) {
+        $search = $this->query("SELECT accountEmail, hash, active FROM users WHERE accountEmail='".$email."' AND hash='".$hash."' AND active='0'") or die(mysql_error()); 
+        return $search;
+    }
+    
+    public function check_business_hash($email, $hash) {
+        $search = $this->query("SELECT accountEmail, hash, active FROM businesses WHERE accountEmail='".$email."' AND hash='".$hash."' AND active='0'") or die(mysql_error()); 
+        return $search;  
+    }
+    
     public function update_business($businessID, $owner, $address, $city, $state, $postal_code, $email, $phoneFull,
         $extension, $website, $goal, $work_type, $positions_open, $compensated_experience, $hours_needed, $begin_month,
         $end_month, $other_information){
